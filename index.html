@@ -1,0 +1,245 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>任务九：JavaScript和树（三）</title>
+		<link rel="stylesheet" href="css/index.css">
+	</head>
+	<body>
+		<!--多叉树flex布局开始-->
+		<div class="root_box flex_box">程序猿
+			<!--子树-->
+			<div class="box_2 flex_box">前端
+				
+                <div class="box_3 flex_box">
+					<div class="box_4 flex_box">JS工程师</div>
+					<div class="box_5 flex_box">CSS视觉设计师</div>
+                    技术向	
+					<div class="box_5 flex_box">交互设计师</div>	
+					<div class="box_5 flex_box">前端架构师</div>	
+				</div>
+				
+				<div class="box_6 flex_box">设计向</div>
+
+                <div class="box_6 flex_box">
+					<div class="box_7 flex_box">产品经理</div>
+					管理向	
+					<div class="box_8 flex_box">产品顾问</div>	
+				</div>
+
+			</div>
+
+			<!--子树-->
+			<div class="box_9 flex_box">后端
+				<div class="box_10 flex_box">技术向
+					<div class="box_11 flex_box">大数据挖掘</div>	
+					<div class="box_12 flex_box">测试工程师</div>	
+					<div class="box_12 flex_box">开发工程师</div>	
+				</div>
+				
+				<div class="box_13 flex_box">
+					<div class="box_14 flex_box">产品经理
+                        <div class="box_14 flex_box">产品总监</div>
+                    </div>
+					管理向	
+					<div class="box_15 flex_box">产品顾问</div>	
+				</div>
+			</div>
+            <!--子树-->
+			<div class="box_9 flex_box">全栈</div>
+
+		</div>
+		<!--多叉树flex布局结束-->
+		<div class="btn_container">
+            <div class="btn_orderTranverse btn">深度遍历</div>
+            <input type="text" name="search" class="search" placeholder="请输入查询词" />
+			<span id="prompt">查询词查找中...</span>
+            <div class="btn_search btn">查询</div>
+		</div>
+
+		<div class="add_container">
+            <div class="btn_add btn">增加</div>
+            <input type="text" name="add" class="add" placeholder="请输入需要添加的内容" />
+            <div class="btn_delete btn">删除</div>
+		</div>
+		
+		<script type="text/javascript">
+			'use strict';
+			window.onload = function(){
+				//选择器方法
+				var $ = function(e){
+					return document.querySelector(e);
+				}
+				//递归实现(深度优先)           
+				function orderTranverse(node,arr,click_judge){
+                    if(node != null){
+                        arr.push(node);
+                        for(let i = 0;i < node.children.length;i++){
+                            if(node.children[i].nodeType == 1){
+                                orderTranverse(node.children[i],arr);
+                            }
+                        }
+                    }
+                }
+
+				
+				//遍历节点样式函数，当子元素被遍历时背景发生改变同时使其他不为当前被遍历到的元素背景初始化
+				function box_bgc(e,click_judge,arr){
+					//获取所有的节点
+					let nodeArr = document.querySelectorAll(".flex_box");
+					let box_length = nodeArr.length;
+					//将所有结点背景颜色初始化
+					for(let i = 0;i < box_length;i++){
+						nodeArr[i].style.backgroundColor = "#fff";
+						nodeArr[i].style.color = "#434A54";
+					}
+					//将被遍历到的节点样式突出显示（背景和对应节点代表字体的颜色）
+					e.style.backgroundColor = "#1abc9c";
+					e.style.color = "#fff";
+                     //判断查询按钮是否被点击
+                    if(click_judge){
+                        for(let x = 0;x < e.childNodes.length;x++){
+                            var search_content = document.querySelector(".search").value;
+                            if(e.childNodes[x].nodeType == 3&&e.childNodes[x].nodeValue.search(search_content) != -1){
+                                e.style.fontSize = "20px";
+                                e.style.fontWeight = "900";
+								document.querySelector("#prompt").innerText = "已找到查询词并放大！";
+								clearTimeout(timer_1);
+                            }else{			
+							} 					  
+                        }
+                    }			
+				}
+				
+				//遍历动画
+				//计时器声明
+				var timer = null;
+				var timer_1 = null;
+				var timer_2 = null;
+				function element_animation(arr,i,click_judge){
+					console.log(arr);
+					//清空动画避免同时点击多个遍历时出现动画重叠
+					clearInterval(timer);
+					timer = setInterval(function(){		
+						//若i值大于节点个数，则将清除动画，即当指定遍历动画播放一遍后将动画初始化（结束）
+						if(i > arr.length - 1){
+							arr[arr.length - 1].style.backgroundColor = "#fff";
+							arr[arr.length - 1].style.color = "#434A54";
+							clearInterval(timer);
+							//从当前语句退出
+							return;
+						}else{
+							//调用遍历结点动画函数，使被遍历的结点样式改变
+							box_bgc(arr[i],click_judge,arr);
+						}
+						++i;
+					},1000);
+					timer_2 = setTimeout(function(){
+						document.querySelector("#prompt").style.display = "none"; 
+					},arr.length * 1300);
+					//clearInterval(timer);
+				}
+
+				//按钮点击事件
+				function Tranverse_btn(root,action,click_judge){
+					//声明块级变量用以遍历各个节点时作为索引
+					let i = 0;
+					//声明空数组用于存储各个节点
+					var arr = [];
+					action(root,arr,click_judge);
+                    /*for(let x=0;x<arr.length;x++){
+                        alert(arr[x].innerHTML);
+                    }*/
+                    
+					//调用遍历动画
+					element_animation(arr,i,click_judge);
+				}
+				
+				//执行函数
+				function init(){
+					//递归实现按钮绑定点击事件
+					$(".btn_orderTranverse").onclick = function(){
+                        start();
+                        var isClicked = false;
+						Tranverse_btn($(".root_box"),orderTranverse,isClicked);
+					};
+                    //查询点击
+                    $(".btn_search").onclick = function(){
+						clearTimeout(timer_1);
+						clearTimeout(timer_2);
+                        var search_content = document.querySelector(".search").value;
+                        if(search_content == ""){
+                            alert("输入点什么吧！");
+                        }else{
+                            start();
+                            var isClicked = true;
+                            Tranverse_btn($(".root_box"),orderTranverse,isClicked);										
+                        }
+						document.querySelector("#prompt").style.display = "block"; 
+						document.querySelector("#prompt").innerText = "查询词查找中...";
+						timer_1 = setInterval(function(){
+							if(document.querySelector("#prompt").innerText != "已找到查询词并放大！"){
+								document.querySelector("#prompt").innerText = "未找到查询词！";	
+							}else{}
+						},23000)
+                    }
+                    
+				};
+				//元素显示初始化
+                function start(){
+                    //获取所有的节点
+                    let nodeArr = document.querySelectorAll(".flex_box");
+                    let box_length = nodeArr.length;
+                    //将所有结点背景颜色初始化
+                    for(let i = 0;i < box_length;i++){
+                        nodeArr[i].style.backgroundColor = "#fff";
+                        nodeArr[i].style.color = "#434A54";
+                        nodeArr[i].style.fontSize = "10px";
+                        nodeArr[i].style.fontWeight = "700";
+                    }
+
+                }
+				init();
+
+				//js实现jq的hasClass函数方法
+				Object.prototype.hasClass = function(cName){
+					return !!this.className.match( new RegExp( "(\\s|^)" + cName + "(\\s|$)") );
+				}
+				//js实现jq的addClass函数方法
+				Object.prototype.addClass = function(newClass){
+					if(!this.hasClass(newClass)){
+						this.className += " " + newClass;
+					} 
+				}
+				//js实现jq的removeClass函数方法
+				Object.prototype.removeClass = function(cName){
+					if(this.hasClass(cName)){
+						this.className = this.className.replace(new RegExp("(\\s|^)" + cName + "(\\s|$)")," ");
+					}
+				}
+
+				//点击添加一个selected的class名
+				document.querySelector(".root_box").onclick = function(ev){
+					var ev = ev || window.event;
+					var target = ev.target || ev.srcElement;
+					if(target.nodeName.toLowerCase() == "div"){
+						if(!target.hasClass("selected")){
+							target.addClass("selected");
+						}else{
+							target.removeClass("selected");
+						}
+						
+					}
+				}
+				//被选中的含有class名为selected的元素点击则删除
+				document.querySelector(".btn_delete").onclick = function(){
+					document.querySelector(".selected").remove();
+				}
+
+
+			}
+
+			
+		</script>
+	</body>
+</html>
