@@ -242,13 +242,19 @@
 				}
 
 				//点击增加按钮增加元素
-				document.querySelector(".btn_add").onclick = function(){				
+				document.querySelector(".btn_add").onclick = function(){
+					var add_content = document.querySelector(".add").value;				
 					if(document.querySelector(".selected") != null){
-						var a = confirm("确定添加元素？");
-						if(a){
-							var add_content = document.querySelector(".add").value;
-							document.querySelector(".selected").innerHTML += "<div class='flex_box'>" + add_content + "</div>";
-						}else{return;}
+						if(add_content != ""){
+							var a = confirm("确定添加元素？");
+							if(a){							
+								document.querySelector(".selected").innerHTML += "<div class='flex_box'>" + add_content + "</div>";
+							}else{return;}
+						}else{
+							alert("请输入需要添加的内容！");
+							return;
+						}
+						
 					}else{
 						alert("请选择一个元素！");
 						return;
