@@ -125,6 +125,6 @@ a{
 }
 
 .selected{
-    color:#fff;
-    background-color:#1abc9c;
+    color:#fff !important;
+    background-color:#1abc9c !important;
 }
