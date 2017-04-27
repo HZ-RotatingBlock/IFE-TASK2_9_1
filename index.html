@@ -218,7 +218,7 @@
 					}
 				}
 
-				//点击添加一个selected的class名
+				//点击添加一个selected的class名(使用事件委托)
 				document.querySelector(".root_box").onclick = function(ev){
 					var ev = ev || window.event;
 					var target = ev.target || ev.srcElement;
@@ -231,9 +231,30 @@
 						
 					}
 				}
+				
 				//被选中的含有class名为selected的元素点击则删除
 				document.querySelector(".btn_delete").onclick = function(){
-					document.querySelector(".selected").remove();
+					var a = confirm("确定要删除元素吗？")
+					if(a){
+						document.querySelector(".selected").remove();
+					}else{return;}
+					
+				}
+
+				//点击增加按钮增加元素
+				document.querySelector(".btn_add").onclick = function(){				
+					if(document.querySelector(".selected") != null){
+						var a = confirm("确定添加元素？");
+						if(a){
+							var add_content = document.querySelector(".add").value;
+							document.querySelector(".selected").innerHTML += "<div class='flex_box'>" + add_content + "</div>";
+						}else{return;}
+					}else{
+						alert("请选择一个元素！");
+						return;
+						}
+					
+					
 				}
 
 
