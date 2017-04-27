@@ -1,0 +1,130 @@
+*{
+    margin:0;
+    padding:0;
+    font-size:14px;
+    font-family:"Microsoft YaHei";
+    list-style:none;
+    color:#000;
+}
+body{
+    font-size:12px;
+    font-family:"Microsoft YaHei";
+    background-color:#fff;
+    overflow-x:hidden;
+}
+a{
+    color:#000;
+    text-decoration:none;
+}
+.flex_box{
+    display:flex;
+    display:-webkit-flex;
+    width:30%;
+    height:80%;
+    font-size:10px;
+    font-weight:700;
+    text-align:center;
+    color:#434A54;
+    align-items:center;
+    align-content:space-around;
+    justify-content:space-around;
+    border:2px solid #434A54;
+    border-radius:3px;
+    transition:all 0.5s;
+}
+.root_box{
+    margin:50px auto;
+    width:1280px;
+    height:400px;
+}
+.flex_box:hover{
+    transform:scale(1.1);
+}
+
+/*按钮设置*/
+.btn_container,
+.add_container{
+    position:relative;
+    margin:-30px auto;
+    width:366px;
+    height:400px;
+    transform:translateX(-70%);
+}
+.add_container{
+    margin-top:-400px;
+    transform:translateX(70%);
+}
+.btn{
+    display:inline-block;
+    float:left;
+    width:100px;
+    height:50px;
+    font-size:20px;
+    font-weight:700;
+    line-height:50px;
+    text-align:center;
+    color:#fff;
+    background-color:#434A54;
+    border:1px solid #1abc9c;
+    border-radius:3px;
+    transition:all 0.5s;
+    cursor:pointer;
+}
+.btn:hover{
+    box-shadow:5px 5px 10px #434A54;
+    border-radius:4px;
+}
+.btn_orderTranverse,
+.search,
+.add,
+.btn_search,
+.btn_add,.btn_delete{
+    position:absolute;
+    top:10px;
+    left:50%;
+    transform:translateX(-50%);
+}
+.search,
+.add{
+    top:70px;
+    width:100%;
+    height:50px;
+    font-size:25px;
+    font-wight:700;
+    text-align:center;
+    color:#434A54;
+    border:2px solid #434A54;
+    border-radius:3px;
+    outlint:none;
+    transition:all 0.5s;
+}
+.search:hover,.add:hover{
+    box-shadow:0px 0px 10px #434A54;
+    border-radius:10px;
+}
+.btn_search,
+.btn_delete{
+    top:130px;
+}
+
+#prompt{
+    display:none;
+    position:absolute;
+    top:180px;
+    left:50%;
+    height:50px;
+    font-size:20px;
+    font-weight:700;
+    line-height:50px;
+    text-align:center;
+    color:#434A54;
+    transform:translateX(-42%);
+    -webkit-transform:translateX(-42%);
+    -o-transform:translateX(-42%);
+    
+}
+
+.selected{
+    color:#fff;
+    background-color:#1abc9c;
+}
